@@ -1,21 +1,16 @@
 <template>
-  <div id="app">
-    <List></List>
+  <div id="list">
+    A list
   </div>
 </template>
 
 <script>
-import List from "./components/List.vue";
-
 export default {
-  name: "App",
-  components: {
-    List
-  }
+  name: "List"
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
