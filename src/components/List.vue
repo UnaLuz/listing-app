@@ -1,33 +1,33 @@
 <template>
-  <div id="list">
-    <label for="newItem">Write another list item:</label>
-    <input type="text" id="newItem" name="newItem" minlength="2" size="20" />
-    <button>Add</button>
+  <div id="list-component">
+    <section>
+      <InputSection />
+    </section>
+    <section>
+      <ListItem />
+    </section>
   </div>
 </template>
 
 <script>
+import InputSection from "./InputSection.vue";
+import ListItem from "./ListItem.vue";
 export default {
-  name: "List"
+  name: "ListComponent",
+  components: {
+    InputSection,
+    ListItem
+  }
 };
 </script>
 
 <style scoped lang="scss">
-#list {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 0px;
+#list-component {
   padding: 0.5rem;
+  margin-top: 0px;
   display: flex;
+  flex-flow: column wrap;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-}
-label,
-input {
-  margin: 0.5rem;
 }
 </style>
