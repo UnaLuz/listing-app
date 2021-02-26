@@ -1,13 +1,14 @@
 <template>
-  <div id="list-item">
-    <p>hello</p>
-    <button>X</button>
-  </div>
+  <li id="list-item">
+    {{ itemText }}
+    <button @click="$emit('delete-item', itemId)">X</button>
+  </li>
 </template>
 
 <script>
 export default {
-  name: "ListItem"
+  name: "ListItem",
+  props: ["itemText", "itemId"]
 };
 </script>
 

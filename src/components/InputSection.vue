@@ -1,8 +1,10 @@
 <template>
   <div id="input-section">
     <label for="newItem">Write another list item:</label>
-    <input type="text" id="newItem" name="newItem" minlength="2" size="20" />
-    <button>Add</button>
+    <div>
+      <input type="text" id="newItem" name="newItem" minlength="2" size="20" />
+      <button>Add</button>
+    </div>
   </div>
 </template>
 

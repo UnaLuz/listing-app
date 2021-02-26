@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <List></List>
+    <List :list-items="listItems" @delete-list-item="deleteListItem($event)" />
   </div>
 </template>
 
@@ -9,9 +9,29 @@ import List from "./components/List.vue";
 
 export default {
   name: "App",
-  data() {},
   components: {
     List
+  },
+  data() {
+    return {
+      listItems: [
+        {
+          id: 1,
+          text: "Do the dishes"
+        },
+        {
+          id: 2,
+          text: "Mow the lawn"
+        }
+      ]
+    };
+  },
+  methods: {
+    deleteListItem: function(itemId) {
+      this.listItems = this.listItems.filter(obj => {
+        return obj.id !== itemId;
+      });
+    }
   }
 };
 </script>

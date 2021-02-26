@@ -1,11 +1,16 @@
 <template>
   <div id="list-component">
-    <section>
-      <InputSection />
-    </section>
-    <section>
-      <ListItem />
-    </section>
+    <InputSection />
+    <ul>
+      <li
+        is="list-item"
+        v-for="item in listItems"
+        :key="item.id"
+        :item-text="item.text"
+        :item-id="item.id"
+        @delete-item="$emit('delete-list-item', $event)"
+      ></li>
+    </ul>
   </div>
 </template>
 
@@ -17,7 +22,8 @@ export default {
   components: {
     InputSection,
     ListItem
-  }
+  },
+  props: ["listItems"]
 };
 </script>
 
