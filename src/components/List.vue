@@ -1,6 +1,6 @@
 <template>
   <div id="list-component">
-    <InputSection />
+    <InputSection @add-new-item="$emit('add-item', $event)" />
     <ul>
       <li
         is="list-item"

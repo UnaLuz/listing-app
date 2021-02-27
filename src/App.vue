@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <List :list-items="listItems" @delete-list-item="deleteListItem($event)" />
+    <List
+      :list-items="listItems"
+      @delete-list-item="deleteListItem($event)"
+      @add-item="addNewItem($event)"
+    />
   </div>
 </template>
 
@@ -31,6 +35,14 @@ export default {
       this.listItems = this.listItems.filter(obj => {
         return obj.id !== itemId;
       });
+    },
+    addNewItem: function(itemText) {
+      if (itemText) {
+        this.listItems.push({
+          id: this.listItems.length + 1,
+          text: itemText
+        });
+      }
     }
   }
 };
@@ -41,14 +53,14 @@ export default {
   box-sizing: border-box;
 }
 body {
-  background-color: hsl(100, 10, 5);
+  background-color: hsl(100deg, 10%, 5%);
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: hsl(100, 0, 75);
+  color: hsl(100deg, 0%, 75%);
   margin-top: 6vh;
   display: flex;
   justify-content: center;
