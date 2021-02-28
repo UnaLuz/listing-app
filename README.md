@@ -1,5 +1,8 @@
 # list-frontend-app
 
+I'm currently learning [Vue.js](https://vuejs.org) and decided to create this very simple web app to practice what I learn.
+This was built using plain Vue.js, no Vuex, no Vue Router, etc.
+
 ## Project setup
 ```
 npm install
