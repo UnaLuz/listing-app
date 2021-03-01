@@ -27,7 +27,8 @@ export default {
           id: 2,
           text: "Mow the lawn"
         }
-      ]
+      ],
+      nextKey: 3
     };
   },
   methods: {
@@ -39,9 +40,10 @@ export default {
     addNewItem: function(itemText) {
       if (itemText) {
         this.listItems.push({
-          id: this.listItems.length + 1,
+          id: this.nextKey,
           text: itemText
         });
+        this.nextKey += 1;
       }
     }
   }
