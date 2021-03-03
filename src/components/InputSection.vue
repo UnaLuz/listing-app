@@ -1,14 +1,14 @@
 <template>
   <div id="input-section">
-    <label for="newItem">Write another list item:</label>
+    <label for="newItem">New list item:</label>
     <div>
       <input
         v-model="newListItem"
         type="text"
         id="newItem"
         name="newItem"
+        placeholder="Make dinner..."
         minlength="2"
-        size="20"
       />
       <button @click="addItem()">Add</button>
     </div>
@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     addItem: function() {
-      if (this.newListItem && this.newListItem.length > 1) {
+      if (this.newListItem) {
         this.$emit("add-new-item", this.newListItem);
         this.newListItem = "";
       }
@@ -36,13 +36,27 @@ export default {
 
 <style scoped lang="scss">
 #input-section {
+  max-width: 90%;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
 }
-label,
 input {
-  margin: 0.5rem;
+  height: 2rem;
+  padding: 0.5rem;
+  border: 1px solid grey;
+  border-radius: 10px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: normal;
+}
+input,
+button {
+  margin-left: 1em;
+}
+label,
+input,
+button {
+  margin-bottom: 0.5rem;
 }
 </style>
