@@ -1,68 +1,111 @@
 <template>
   <div id="app">
-    <List
-      :list-items="listItems"
-      @delete-list-item="deleteListItem($event)"
-      @add-item="addNewItem($event)"
-    />
+    <InputSection @add-new-item="addNewItem($event)" />
+    <ul>
+      <li
+        is="list-item"
+        v-for="item in listItems"
+        :key="item.id"
+        :item-text="item.text"
+        :item-id="item.id"
+        @delete-item="deleteListItem($event)"
+      ></li>
+    </ul>
   </div>
 </template>
 
 <script>
-import List from "./components/List.vue";
+import InputSection from "./components/InputSection.vue";
+import ListItem from "./components/ListItem.vue";
 
 export default {
   name: "App",
   components: {
-    List
+    InputSection,
+    ListItem
   },
   data() {
     return {
-      listItems: [
-        {
-          id: 1,
-          text: "Do the dishes"
-        },
-        {
-          id: 2,
-          text: "Mow the lawn"
-        }
-      ]
+      listItems: [],
+      nextKey: 1
     };
   },
   methods: {
+    addNewItem: function(itemText) {
+      if (itemText) {
+        this.listItems.push({
+          id: this.nextKey,
+          text: itemText
+        });
+        this.nextKey += 1;
+      }
+    },
     deleteListItem: function(itemId) {
       this.listItems = this.listItems.filter(obj => {
         return obj.id !== itemId;
       });
-    },
-    addNewItem: function(itemText) {
-      if (itemText) {
-        this.listItems.push({
-          id: this.listItems.length + 1,
-          text: itemText
-        });
-      }
     }
   }
 };
 </script>
 
 <style lang="scss">
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+$primary-color: hsl(100deg, 50%, 50%);
+
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 body {
   background-color: hsl(100deg, 10%, 5%);
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+  font-weight: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: hsl(100deg, 0%, 75%);
+  padding: 0.5rem;
   margin-top: 6vh;
   display: flex;
   justify-content: center;
+  flex-flow: column wrap;
+  align-items: center;
+}
+button {
+  min-width: 2rem;
+  min-height: 2rem;
+  margin: 0%;
+  padding: 0.5rem 1rem;
+  border: 0.15rem solid $primary-color;
+  border-radius: 10px;
+  background-color: transparent;
+  // Text related styling
+  color: $primary-color;
+  text-transform: uppercase;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    border-color: white;
+    background-color: $primary-color;
+    color: white;
+  }
+  &:active {
+    border-color: $primary-color;
+    background-color: white;
+    color: hsl(100deg, 75%, 30%);
+  }
+}
+ul {
+  width: 20rem;
+  max-width: 90%;
+  padding: 0px;
 }
 </style>
