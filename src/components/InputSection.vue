@@ -35,6 +35,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$primary-color: hsl(100deg, 50%, 50%);
+
 #input-section {
   max-width: 90%;
   display: flex;
@@ -49,6 +51,10 @@ input {
   border-radius: 10px;
   font-family: "Montserrat", sans-serif;
   font-weight: normal;
+
+  &:focus {
+    border: 1px solid $primary-color;
+  }
 }
 input,
 button {
