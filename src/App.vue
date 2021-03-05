@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <InputSection @add-new-item="addNewItem($event)" />
+    <select-lang />
+    <input-section @add-new-item="addNewItem($event)" />
     <ul>
       <li
         is="list-item"
@@ -15,12 +16,14 @@
 </template>
 
 <script>
+import SelectLang from "./components/SelectLang.vue";
 import InputSection from "./components/InputSection.vue";
 import ListItem from "./components/ListItem.vue";
 
 export default {
   name: "App",
   components: {
+    SelectLang,
     InputSection,
     ListItem
   },
@@ -64,19 +67,22 @@ body {
 }
 #app {
   width: 100%;
+  min-height: 100%;
+  padding: 0.5rem;
+  // Text style
   font-family: "Montserrat", sans-serif;
   font-weight: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: hsl(100deg, 0%, 75%);
-  padding: 0.5rem;
-  margin-top: 6vh;
+  // Flex-box
   display: flex;
-  justify-content: center;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
   align-items: center;
 }
+
 button {
   min-width: 2rem;
   min-height: 2rem;
@@ -106,6 +112,5 @@ button {
 ul {
   width: 20rem;
   max-width: 90%;
-  padding: 0px;
 }
 </style>
