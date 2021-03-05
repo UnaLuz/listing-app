@@ -19,18 +19,14 @@ $primary-color: hsla(100deg, 75%, 50%, 0.25);
 
 #list-item {
   padding: 8px;
+  border-top: 2px solid $primary-color;
+  // Flex styles
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
-  border-top: 2px solid $primary-color;
 
-  p {
-    overflow: auto;
-    flex-grow: 1;
-    flex-shrink: 1;
-  }
   button {
     flex-grow: 0;
     flex-shrink: 0;

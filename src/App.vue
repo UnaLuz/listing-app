@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       listItems: [],
-      nextKey: 1
+      nextKey: 0
     };
   },
   methods: {
@@ -64,14 +64,16 @@ body {
 }
 #app {
   width: 100%;
+  padding: 0.5rem;
+  margin-top: 6vh;
+  // Text styles
   font-family: "Montserrat", sans-serif;
   font-weight: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: hsl(100deg, 0%, 75%);
-  padding: 0.5rem;
-  margin-top: 6vh;
+  // Flex styles
   display: flex;
   justify-content: center;
   flex-flow: column wrap;
@@ -85,12 +87,12 @@ button {
   border: 0.15rem solid $primary-color;
   border-radius: 10px;
   background-color: transparent;
+  cursor: pointer;
   // Text related styling
   color: $primary-color;
   text-transform: uppercase;
-  font-family: "Montserrat", sans-serif;
+  font-family: inherit;
   font-weight: bold;
-  cursor: pointer;
 
   &:hover {
     border-color: white;
@@ -106,6 +108,5 @@ button {
 ul {
   width: 20rem;
   max-width: 90%;
-  padding: 0px;
 }
 </style>
