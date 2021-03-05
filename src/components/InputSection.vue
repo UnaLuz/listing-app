@@ -1,16 +1,16 @@
 <template>
   <div id="input-section">
-    <label for="newItem">New list item:</label>
+    <label for="newItem">{{ label }}</label>
     <div>
       <input
         v-model="newListItem"
         type="text"
         id="newItem"
         name="newItem"
-        placeholder="Make dinner..."
+        :placeholder="placeholder"
         minlength="2"
       />
-      <button @click="addItem()">Add</button>
+      <button @click="addItem()">{{ addButtonTxt }}</button>
     </div>
   </div>
 </template>
@@ -23,12 +23,25 @@ export default {
       newListItem: ""
     };
   },
+  props: ["labelTxt", "placeholderTxt", "buttonTxt"],
   methods: {
     addItem: function() {
       if (this.newListItem) {
         this.$emit("add-new-item", this.newListItem);
         this.newListItem = "";
       }
+    }
+  },
+  computed: {
+    // In case there was a problem with the props passed:
+    label: function() {
+      return this.labelTxt || "New list item:";
+    },
+    placeholder: function() {
+      return this.placeholderTxt || "Make dinner...";
+    },
+    addButtonTxt: function() {
+      return this.buttonTxt || "Add";
     }
   }
 };

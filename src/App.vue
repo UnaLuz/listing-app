@@ -1,7 +1,12 @@
 <template>
   <div id="app">
-    <select-lang />
-    <input-section @add-new-item="addNewItem($event)" />
+    <select-lang @lang-change="changeLanguageTo($event)" />
+    <input-section
+      @add-new-item="addNewItem($event)"
+      :labelTxt="staticText.InputSection.label"
+      :placeholderTxt="staticText.InputSection.placeholder"
+      :buttonTxt="staticText.InputSection.button"
+    />
     <ul>
       <li
         is="list-item"
@@ -30,10 +35,14 @@ export default {
   data() {
     return {
       listItems: [],
-      nextKey: 1
+      nextKey: 1,
+      lang: "EN"
     };
   },
   methods: {
+    changeLanguageTo: function(selectedLang) {
+      this.lang = selectedLang;
+    },
     addNewItem: function(itemText) {
       if (itemText) {
         this.listItems.push({
@@ -47,6 +56,29 @@ export default {
       this.listItems = this.listItems.filter(obj => {
         return obj.id !== itemId;
       });
+    }
+  },
+  computed: {
+    staticText: function() {
+      switch (this.lang) {
+        case "ES":
+          return {
+            InputSection: {
+              label: "Nuevo elemento:",
+              placeholder: "Hacer la cena...",
+              button: "Añadir"
+            }
+          };
+
+        default:
+          return {
+            InputSection: {
+              label: "New list item:",
+              placeholder: "Make dinner...",
+              button: "Add"
+            }
+          };
+      }
     }
   }
 };
