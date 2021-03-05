@@ -1,20 +1,35 @@
 <template>
-  <select id="lang-select" name="lang">
-    <option value="en">EN</option>
-    <option value="es">ES</option>
+  <select
+    id="select-lang"
+    name="lang"
+    v-model="selected"
+    @change="$emit('lang-change', selected)"
+  >
+    <option v-for="lang in langs" :key="lang.key" :value="lang.value">
+      {{ lang.value }}
+    </option>
   </select>
 </template>
 
 <script>
 export default {
-  name: "SelectLang"
+  name: "SelectLang",
+  data() {
+    return {
+      selected: "EN",
+      langs: [
+        { key: 0, value: "EN" },
+        { key: 1, value: "ES" }
+      ]
+    };
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 $primary-color: hsl(100deg, 50%, 50%);
 
-#lang-select {
+#select-lang {
   -webkit-appearance: none;
   appearance: none;
   margin: 1rem;
