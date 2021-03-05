@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       listItems: [],
-      nextKey: 1,
+      nextKey: 0,
       lang: "EN"
     };
   },
@@ -99,16 +99,16 @@ body {
 }
 #app {
   width: 100%;
-  min-height: 100%;
   padding: 0.5rem;
-  // Text style
+  margin-top: 6vh;
+  // Text styles
   font-family: "Montserrat", sans-serif;
   font-weight: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: hsl(100deg, 0%, 75%);
-  // Flex-box
+  // Flex styles
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
@@ -123,12 +123,12 @@ button {
   border: 0.15rem solid $primary-color;
   border-radius: 10px;
   background-color: transparent;
+  cursor: pointer;
   // Text related styling
   color: $primary-color;
   text-transform: uppercase;
-  font-family: "Montserrat", sans-serif;
+  font-family: inherit;
   font-weight: bold;
-  cursor: pointer;
 
   &:hover {
     border-color: white;

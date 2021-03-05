@@ -48,8 +48,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$primary-color: hsl(100deg, 50%, 50%);
+
 #input-section {
   max-width: 90%;
+  // Flex styles
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -60,8 +63,14 @@ input {
   padding: 0.5rem;
   border: 1px solid grey;
   border-radius: 10px;
-  font-family: "Montserrat", sans-serif;
+  // Text styles
+  font-family: inherit;
   font-weight: normal;
+  font-size: 0.85rem;
+
+  &:focus {
+    border-color: $primary-color;
+  }
 }
 input,
 button {
