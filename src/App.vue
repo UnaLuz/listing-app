@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    <InputSection @add-new-item="addNewItem($event)" />
+    <select-lang @lang-change="changeLanguageTo($event)" />
+    <input-section
+      @add-new-item="addNewItem($event)"
+      :labelTxt="staticText.InputSection.label"
+      :placeholderTxt="staticText.InputSection.placeholder"
+      :buttonTxt="staticText.InputSection.button"
+    />
     <ul>
       <li
         is="list-item"
@@ -15,22 +21,28 @@
 </template>
 
 <script>
+import SelectLang from "./components/SelectLang.vue";
 import InputSection from "./components/InputSection.vue";
 import ListItem from "./components/ListItem.vue";
 
 export default {
   name: "App",
   components: {
+    SelectLang,
     InputSection,
     ListItem
   },
   data() {
     return {
       listItems: [],
-      nextKey: 0
+      nextKey: 0,
+      lang: "EN"
     };
   },
   methods: {
+    changeLanguageTo: function(selectedLang) {
+      this.lang = selectedLang;
+    },
     addNewItem: function(itemText) {
       if (itemText) {
         this.listItems.push({
@@ -44,6 +56,29 @@ export default {
       this.listItems = this.listItems.filter(obj => {
         return obj.id !== itemId;
       });
+    }
+  },
+  computed: {
+    staticText: function() {
+      switch (this.lang) {
+        case "ES":
+          return {
+            InputSection: {
+              label: "Nuevo elemento:",
+              placeholder: "Hacer la cena...",
+              button: "Añadir"
+            }
+          };
+
+        default:
+          return {
+            InputSection: {
+              label: "New list item:",
+              placeholder: "Make dinner...",
+              button: "Add"
+            }
+          };
+      }
     }
   }
 };
@@ -75,10 +110,11 @@ body {
   color: hsl(100deg, 0%, 75%);
   // Flex styles
   display: flex;
-  justify-content: center;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
   align-items: center;
 }
+
 button {
   min-width: 2rem;
   min-height: 2rem;
