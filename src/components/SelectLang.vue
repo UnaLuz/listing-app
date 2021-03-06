@@ -16,12 +16,20 @@ export default {
   name: "SelectLang",
   data() {
     return {
-      selected: "EN",
+      selected: "",
       langs: [
         { key: 0, value: "EN" },
         { key: 1, value: "ES" }
       ]
     };
+  },
+  props: ["lang"],
+  mounted() {
+    if (this.lang) {
+      this.selected = this.lang;
+    } else {
+      this.selected = "EN";
+    }
   }
 };
 </script>
@@ -37,6 +45,7 @@ $primary-color: hsl(100deg, 50%, 50%);
   border: 1px solid grey;
   border-radius: 10px;
   background: transparent;
+  cursor: pointer;
   // Flex box styles
   align-self: flex-end;
   // Text styles

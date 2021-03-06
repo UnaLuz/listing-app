@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <select-lang @lang-change="changeLanguageTo($event)" />
+    <select-lang @lang-change="changeLanguageTo($event)" :lang="lang" />
     <input-section
       @add-new-item="addNewItem($event)"
       :labelTxt="staticText.InputSection.label"
@@ -39,9 +39,30 @@ export default {
       lang: "EN"
     };
   },
+  mounted() {
+    if (localStorage.getItem("itemsList")) {
+      try {
+        this.listItems = JSON.parse(localStorage.getItem("itemsList"));
+      } catch (error) {
+        console.log(
+          "An error ocurred when saving 'itemsList to the local storage':\n",
+          error
+        );
+        localStorage.removeItem("itemsList");
+      }
+    }
+    if (localStorage.nextKey) {
+      // console.log(this.nextKey, "->", localStorage.nextKey);
+      this.nextKey = Number(localStorage.nextKey);
+    }
+    if (localStorage.lang) {
+      this.lang = localStorage.lang;
+    }
+  },
   methods: {
     changeLanguageTo: function(selectedLang) {
       this.lang = selectedLang;
+      this.saveLang();
     },
     addNewItem: function(itemText) {
       if (itemText) {
@@ -50,12 +71,25 @@ export default {
           text: itemText
         });
         this.nextKey += 1;
+        this.saveListData();
       }
     },
     deleteListItem: function(itemId) {
       this.listItems = this.listItems.filter(obj => {
         return obj.id !== itemId;
       });
+      // Could reduce the nextKey value by 1 here but it's not necessary
+      this.saveListData();
+    },
+    // Local storage
+    saveLang: function() {
+      localStorage.lang = this.lang;
+    },
+    saveListData: function() {
+      const parsed = JSON.stringify(this.listItems);
+      localStorage.setItem("itemsList", parsed);
+      // console.log(localStorage.nextKey, "->", this.nextKey);
+      localStorage.nextKey = this.nextKey;
     }
   },
   computed: {
@@ -100,7 +134,6 @@ body {
 #app {
   width: 100%;
   padding: 0.5rem;
-  margin-top: 6vh;
   // Text styles
   font-family: "Montserrat", sans-serif;
   font-weight: normal;
