@@ -1,16 +1,16 @@
 <template>
   <div id="input-section">
-    <label for="newItem">New list item:</label>
+    <label for="newItem">{{ label }}</label>
     <div>
       <input
         v-model="newListItem"
         type="text"
         id="newItem"
         name="newItem"
-        placeholder="Make dinner..."
+        :placeholder="placeholder"
         minlength="2"
       />
-      <button @click="addItem()">Add</button>
+      <button @click="addItem()">{{ addButtonTxt }}</button>
     </div>
   </div>
 </template>
@@ -23,6 +23,7 @@ export default {
       newListItem: ""
     };
   },
+  props: ["labelTxt", "placeholderTxt", "buttonTxt"],
   methods: {
     addItem: function() {
       if (this.newListItem) {
@@ -30,13 +31,28 @@ export default {
         this.newListItem = "";
       }
     }
+  },
+  computed: {
+    // In case there was a problem with the props passed:
+    label: function() {
+      return this.labelTxt || "New list item:";
+    },
+    placeholder: function() {
+      return this.placeholderTxt || "Make dinner...";
+    },
+    addButtonTxt: function() {
+      return this.buttonTxt || "Add";
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
+$primary-color: hsl(100deg, 50%, 50%);
+
 #input-section {
   max-width: 90%;
+  // Flex styles
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -47,8 +63,14 @@ input {
   padding: 0.5rem;
   border: 1px solid grey;
   border-radius: 10px;
-  font-family: "Montserrat", sans-serif;
+  // Text styles
+  font-family: inherit;
   font-weight: normal;
+  font-size: 0.85rem;
+
+  &:focus {
+    border-color: $primary-color;
+  }
 }
 input,
 button {
