@@ -1,8 +1,6 @@
 <template>
   <li id="list-item">
-    <p>
-      {{ itemText }}
-    </p>
+    <slot></slot>
     <button @click="$emit('delete-item', itemId)">X</button>
   </li>
 </template>
@@ -10,7 +8,7 @@
 <script>
 export default {
   name: "ListItem",
-  props: ["itemText", "itemId"]
+  props: ["itemId"]
 };
 </script>
 

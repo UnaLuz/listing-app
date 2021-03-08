@@ -1,20 +1,21 @@
 <template>
   <div id="app">
-    <select-lang @lang-change="changeLanguageTo($event)" :lang="lang" />
-    <input-section
+    <SelectLang @lang-change="changeLanguageTo($event)" :lang="lang" />
+    <InputSection
       @add-new-item="addNewItem($event)"
       :labelTxt="staticText.InputSection.label"
       :placeholderTxt="staticText.InputSection.placeholder"
       :buttonTxt="staticText.InputSection.button"
     />
     <ul>
-      <list-item
+      <ListItem
         v-for="item in listItems"
         :key="item.id"
-        :item-text="item.text"
         :item-id="item.id"
         @delete-item="deleteListItem($event)"
-      />
+      >
+        {{ item.text }}
+      </ListItem>
     </ul>
   </div>
 </template>
