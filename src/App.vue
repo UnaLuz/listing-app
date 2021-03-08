@@ -8,14 +8,13 @@
       :buttonTxt="staticText.InputSection.button"
     />
     <ul>
-      <li
-        is="list-item"
+      <list-item
         v-for="item in listItems"
         :key="item.id"
         :item-text="item.text"
         :item-id="item.id"
         @delete-item="deleteListItem($event)"
-      ></li>
+      />
     </ul>
   </div>
 </template>
