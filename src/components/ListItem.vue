@@ -1,8 +1,6 @@
 <template>
   <li id="list-item">
-    <p>
-      {{ itemText }}
-    </p>
+    <slot></slot>
     <button @click="$emit('delete-item', itemId)">X</button>
   </li>
 </template>
@@ -10,24 +8,25 @@
 <script>
 export default {
   name: "ListItem",
-  props: ["itemText", "itemId"]
+  props: ["itemId"]
 };
 </script>
 
 <style scoped lang="scss">
-$primary-color: hsla(100deg, 75%, 50%, 0.25);
+$item-border: hsla(100deg, 50%, 50%, 0.35);
 
 #list-item {
-  padding: 8px;
-  border-top: 2px solid $primary-color;
+  padding: 0.5rem;
+  border-top: 2px solid $item-border;
+  text-align: justify;
   // Flex styles
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  flex-grow: 1;
 
   button {
+    margin-left: 0.5rem;
     flex-grow: 0;
     flex-shrink: 0;
   }

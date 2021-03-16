@@ -2,9 +2,13 @@
   <select
     id="select-lang"
     name="lang"
-    v-model="selected"
-    @change="$emit('lang-change', selected)"
+    :value="selected"
+    @change="$emit('lang-change', $event.target.value)"
   >
+    <!--
+      Can't use v-model on the select element
+      since I don't want use input to directly change the value of 'selected'
+    -->
     <option v-for="lang in langs" :key="lang.key" :value="lang.value">
       {{ lang.value }}
     </option>
@@ -16,7 +20,7 @@ export default {
   name: "SelectLang",
   data() {
     return {
-      selected: "",
+      default: "EN",
       langs: [
         { key: 0, value: "EN" },
         { key: 1, value: "ES" }
@@ -24,11 +28,9 @@ export default {
     };
   },
   props: ["lang"],
-  mounted() {
-    if (this.lang) {
-      this.selected = this.lang;
-    } else {
-      this.selected = "EN";
+  computed: {
+    selected: function() {
+      return this.lang || this.default;
     }
   }
 };

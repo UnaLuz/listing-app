@@ -1,21 +1,21 @@
 <template>
   <div id="app">
-    <select-lang @lang-change="changeLanguageTo($event)" :lang="lang" />
-    <input-section
+    <SelectLang @lang-change="changeLanguageTo($event)" :lang="lang" />
+    <InputSection
       @add-new-item="addNewItem($event)"
       :labelTxt="staticText.InputSection.label"
       :placeholderTxt="staticText.InputSection.placeholder"
       :buttonTxt="staticText.InputSection.button"
     />
     <ul>
-      <li
-        is="list-item"
+      <ListItem
         v-for="item in listItems"
         :key="item.id"
-        :item-text="item.text"
         :item-id="item.id"
         @delete-item="deleteListItem($event)"
-      ></li>
+      >
+        {{ item.text }}
+      </ListItem>
     </ul>
   </div>
 </template>
@@ -122,14 +122,21 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
 
 $primary-color: hsl(100deg, 50%, 50%);
+$background-color: hsl(100deg, 50%, 0%);
+$hover-color: hsl(100deg, 100%, 50%, 0.1);
+$text-color: hsl(100deg, 0%, 85%);
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+html,
 body {
-  background-color: hsl(100deg, 10%, 5%);
+  height: 100%;
+}
+body {
+  background-color: $background-color;
 }
 #app {
   width: 100%;
@@ -140,7 +147,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: hsl(100deg, 0%, 75%);
+  color: $text-color;
   // Flex styles
   display: flex;
   flex-flow: column nowrap;
@@ -164,14 +171,12 @@ button {
   font-weight: bold;
 
   &:hover {
+    background-color: $hover-color;
+  }
+  &:active {
     border-color: white;
     background-color: $primary-color;
     color: white;
-  }
-  &:active {
-    border-color: $primary-color;
-    background-color: white;
-    color: hsl(100deg, 75%, 30%);
   }
 }
 ul {
