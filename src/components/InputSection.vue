@@ -9,6 +9,7 @@
         name="newItem"
         :placeholder="placeholder"
         minlength="2"
+        @keyup.enter="addItem()"
       />
       <button @click="addItem()">{{ addButtonTxt }}</button>
     </div>
