@@ -61,6 +61,7 @@ export default {
   },
   methods: {
     changeLanguageTo: function(selectedLang) {
+      console.log("changeLanguageTo:", selectedLang);
       this.lang = selectedLang;
       this.saveLang();
     },
@@ -78,7 +79,6 @@ export default {
       this.listItems = this.listItems.filter(obj => {
         return obj.id !== itemId;
       });
-      // Could reduce the nextKey value by 1 here but it's not necessary
       this.saveListData();
     },
     // Local storage
@@ -123,7 +123,7 @@ export default {
 
 $primary-color: hsl(100deg, 50%, 50%);
 $background-color: hsl(100deg, 50%, 0%);
-$hover-color: hsl(100deg, 100%, 50%, 0.1);
+$active-color: hsl(100deg, 100%, 50%, 0.2);
 $text-color: hsl(100deg, 0%, 85%);
 
 * {
@@ -170,12 +170,14 @@ button {
   font-family: inherit;
   font-weight: bold;
 
-  &:hover {
-    background-color: $hover-color;
+  &:hover,
+  &:focus {
+    background: $primary-color;
+    color: black;
   }
   &:active {
     border-color: white;
-    background-color: $primary-color;
+    background-color: $active-color;
     color: white;
   }
 }

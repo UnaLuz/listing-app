@@ -17,7 +17,6 @@
 
 <script>
 export default {
-  name: "InputSection",
   data() {
     return {
       newListItem: ""

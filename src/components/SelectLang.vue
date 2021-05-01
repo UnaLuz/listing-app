@@ -6,10 +6,10 @@
     @change="$emit('lang-change', $event.target.value)"
   >
     <!--
-      Can't use v-model on the select element
-      since I don't want use input to directly change the value of 'selected'
+      Can't use v-model on the select element since I don't want
+      user input to directly change the value of 'selected'
     -->
-    <option v-for="lang in langs" :key="lang.key" :value="lang.value">
+    <option v-for="lang in langs" :key="lang.key" :value="lang.key">
       {{ lang.value }}
     </option>
   </select>
@@ -22,8 +22,8 @@ export default {
     return {
       default: "EN",
       langs: [
-        { key: 0, value: "EN" },
-        { key: 1, value: "ES" }
+        { key: "EN", value: "English" },
+        { key: "ES", value: "Español" }
       ]
     };
   },
@@ -57,5 +57,11 @@ $primary-color: hsl(100deg, 50%, 50%);
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: $primary-color;
+
+  &:hover,
+  &:focus {
+    background: $primary-color;
+    color: black;
+  }
 }
 </style>
