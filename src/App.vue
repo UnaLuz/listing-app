@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <SelectLang @lang-change="changeLanguageTo($event)" :lang="lang" />
+    <SelectLang
+      @lang-change="changeLanguageTo($event)"
+      :lang="lang"
+      :ariaLabel="staticText.SelectLang.ariaLabel"
+    />
     <InputSection
       @add-new-item="addNewItem($event)"
       :labelTxt="staticText.InputSection.label"
@@ -12,6 +16,7 @@
         v-for="item in listItems"
         :key="item.id"
         :item-id="item.id"
+        :ariaLabel="staticText.ListItem.ariaLabel"
         @delete-item="deleteListItem($event)"
       >
         {{ item.text }}
@@ -40,19 +45,19 @@ export default {
     };
   },
   mounted() {
+    // Check if there are list items in the local storage when mounted
     if (localStorage.getItem("itemsList")) {
       try {
         this.listItems = JSON.parse(localStorage.getItem("itemsList"));
       } catch (error) {
         console.log(
-          "An error ocurred when saving 'itemsList to the local storage':\n",
+          "An error ocurred when retrieving 'itemsList' from the local storage:\n",
           error
         );
-        localStorage.removeItem("itemsList");
+        localStorage.removeItem("itemsList"); // Assume the item is corrupted and delete it
       }
     }
     if (localStorage.nextKey) {
-      // console.log(this.nextKey, "->", localStorage.nextKey);
       this.nextKey = Number(localStorage.nextKey);
     }
     if (localStorage.lang) {
@@ -87,9 +92,16 @@ export default {
     },
     saveListData: function() {
       const parsed = JSON.stringify(this.listItems);
-      localStorage.setItem("itemsList", parsed);
-      // console.log(localStorage.nextKey, "->", this.nextKey);
-      localStorage.nextKey = this.nextKey;
+      try {
+        localStorage.setItem("itemsList", parsed); // Save list items to the local storage
+        localStorage.nextKey = this.nextKey; // Save the next key to not have duplicates
+      } catch (err) {
+        console.log(
+          "An error ocurred saving 'itemsList' to the local storage:",
+          err
+        );
+        localStorage.removeItem("itemsList"); // Assume the item is corrupted and delete it
+      }
     }
   },
   computed: {
@@ -101,6 +113,12 @@ export default {
               label: "Nuevo elemento:",
               placeholder: "Hacer la cena...",
               button: "Añadir"
+            },
+            SelectLang: {
+              ariaLabel: "Seleccione un lenguaje"
+            },
+            ListItem: {
+              ariaLabel: "Eliminar"
             }
           };
 
@@ -110,6 +128,12 @@ export default {
               label: "New list item:",
               placeholder: "Make dinner...",
               button: "Add"
+            },
+            SelectLang: {
+              ariaLabel: "Select a language"
+            },
+            ListItem: {
+              ariaLabel: "Delete"
             }
           };
       }

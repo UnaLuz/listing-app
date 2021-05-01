@@ -4,6 +4,7 @@
     name="lang"
     :value="selected"
     @change="$emit('lang-change', $event.target.value)"
+    :aria-label="ariaLabel"
   >
     <!--
       Can't use v-model on the select element since I don't want
@@ -17,7 +18,6 @@
 
 <script>
 export default {
-  name: "SelectLang",
   data() {
     return {
       default: "EN",
@@ -27,7 +27,7 @@ export default {
       ]
     };
   },
-  props: ["lang"],
+  props: ["lang", "ariaLabel"],
   computed: {
     selected: function() {
       return this.lang || this.default;

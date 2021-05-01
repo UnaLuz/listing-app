@@ -1,14 +1,16 @@
 <template>
   <li id="list-item">
     <slot></slot>
-    <button @click="$emit('delete-item', itemId)">X</button>
+    <button @click="$emit('delete-item', itemId)" :aria-label="ariaLabel">
+      X
+    </button>
   </li>
 </template>
 
 <script>
 export default {
   name: "ListItem",
-  props: ["itemId"]
+  props: ["itemId", "ariaLabel"]
 };
 </script>
 
