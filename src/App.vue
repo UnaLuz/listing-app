@@ -11,7 +11,13 @@
       :placeholderTxt="staticText.InputSection.placeholder"
       :buttonTxt="staticText.InputSection.button"
     />
-    <ul>
+    <ul class="buttonList">
+      <ButtonReverseList
+        :reverseList="reverseList"
+        @change-list-order="changeListOrder()"
+      />
+    </ul>
+    <ul class="itemList" :class="{ reverse: reverseList }">
       <ListItem
         v-for="item in listItems"
         :key="item.id"
@@ -29,19 +35,22 @@
 import SelectLang from "./components/SelectLang.vue";
 import InputSection from "./components/InputSection.vue";
 import ListItem from "./components/ListItem.vue";
+import ButtonReverseList from "./components/ButtonReverseList.vue";
 
 export default {
   name: "App",
   components: {
     SelectLang,
     InputSection,
-    ListItem
+    ListItem,
+    ButtonReverseList
   },
   data() {
     return {
       listItems: [],
       nextKey: 0,
-      lang: "EN"
+      lang: "EN",
+      reverseList: false
     };
   },
   mounted() {
@@ -106,6 +115,10 @@ export default {
         );
         localStorage.removeItem("itemsList"); // Assume the item is corrupted and delete it
       }
+    },
+    changeListOrder: function() {
+      // Change sorting directionof the list
+      this.reverseList = !this.reverseList;
     }
   },
   computed: {
@@ -212,5 +225,16 @@ button {
 ul {
   width: 20rem;
   max-width: 90%;
+}
+.buttonList {
+  display: flex;
+  flex-direction: row;
+}
+.itemList {
+  display: flex;
+  flex-direction: column;
+}
+.reverse {
+  flex-direction: column-reverse;
 }
 </style>

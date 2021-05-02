@@ -61,6 +61,7 @@ $primary-color: hsl(100deg, 50%, 50%);
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
+  margin-bottom: 0.5em;
 }
 input {
   height: 2rem;
@@ -79,10 +80,5 @@ input {
 input,
 button {
   margin-left: 1em;
-}
-label,
-input,
-button {
-  margin-bottom: 0.5rem;
 }
 </style>
