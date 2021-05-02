@@ -27,7 +27,14 @@ export default {
       ]
     };
   },
-  props: ["lang", "ariaLabel"],
+  props: {
+    lang: {
+      type: String,
+      required: true,
+      default: "EN"
+    },
+    ariaLabel: String
+  },
   computed: {
     selected: function() {
       return this.lang || this.default;

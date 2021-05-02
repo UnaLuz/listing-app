@@ -10,7 +10,13 @@
 <script>
 export default {
   name: "ListItem",
-  props: ["itemId", "ariaLabel"]
+  props: {
+    itemId: {
+      type: Number,
+      required: true
+    },
+    ariaLabel: String
+  }
 };
 </script>
 
