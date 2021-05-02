@@ -4,12 +4,13 @@
     name="lang"
     :value="selected"
     @change="$emit('lang-change', $event.target.value)"
+    :aria-label="ariaLabel"
   >
     <!--
-      Can't use v-model on the select element
-      since I don't want use input to directly change the value of 'selected'
+      Can't use v-model on the select element since I don't want
+      user input to directly change the value of 'selected'
     -->
-    <option v-for="lang in langs" :key="lang.key" :value="lang.value">
+    <option v-for="lang in langs" :key="lang.key" :value="lang.key">
       {{ lang.value }}
     </option>
   </select>
@@ -17,20 +18,28 @@
 
 <script>
 export default {
-  name: "SelectLang",
   data() {
     return {
-      default: "EN",
       langs: [
-        { key: 0, value: "EN" },
-        { key: 1, value: "ES" }
+        { key: "EN", value: "English" },
+        { key: "ES", value: "Español" }
       ]
     };
   },
-  props: ["lang"],
+  props: {
+    lang: {
+      type: String,
+      required: true,
+      default: "EN"
+    },
+    ariaLabel: String
+  },
   computed: {
+    // I need 'selected' to be a computed property so that when 'lang' is properly set in the parent
+    // it changes it's default value updating 'selected' too, otherwise the value of the select element
+    // stays equal to 'lang's default value until user changes option
     selected: function() {
-      return this.lang || this.default;
+      return this.lang;
     }
   }
 };
@@ -57,5 +66,11 @@ $primary-color: hsl(100deg, 50%, 50%);
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: $primary-color;
+
+  &:hover,
+  &:focus {
+    background: $primary-color;
+    color: black;
+  }
 }
 </style>

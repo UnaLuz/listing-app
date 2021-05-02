@@ -1,17 +1,28 @@
 <template>
   <div id="app">
-    <SelectLang @lang-change="changeLanguageTo($event)" :lang="lang" />
+    <SelectLang
+      @lang-change="changeLanguageTo($event)"
+      :lang="lang"
+      :ariaLabel="staticText.SelectLang.ariaLabel"
+    />
     <InputSection
       @add-new-item="addNewItem($event)"
       :labelTxt="staticText.InputSection.label"
       :placeholderTxt="staticText.InputSection.placeholder"
       :buttonTxt="staticText.InputSection.button"
     />
-    <ul>
+    <ul class="buttonList">
+      <ButtonReverseList
+        :reverseList="reverseList"
+        @change-list-order="changeListOrder()"
+      />
+    </ul>
+    <ul class="itemList" :class="{ reverse: reverseList }">
       <ListItem
         v-for="item in listItems"
         :key="item.id"
         :item-id="item.id"
+        :ariaLabel="staticText.ListItem.ariaLabel"
         @delete-item="deleteListItem($event)"
       >
         {{ item.text }}
@@ -24,35 +35,38 @@
 import SelectLang from "./components/SelectLang.vue";
 import InputSection from "./components/InputSection.vue";
 import ListItem from "./components/ListItem.vue";
+import ButtonReverseList from "./components/ButtonReverseList.vue";
 
 export default {
   name: "App",
   components: {
     SelectLang,
     InputSection,
-    ListItem
+    ListItem,
+    ButtonReverseList
   },
   data() {
     return {
       listItems: [],
       nextKey: 0,
-      lang: "EN"
+      lang: "EN",
+      reverseList: false
     };
   },
   mounted() {
+    // Check if there are list items in the local storage when mounted
     if (localStorage.getItem("itemsList")) {
       try {
         this.listItems = JSON.parse(localStorage.getItem("itemsList"));
       } catch (error) {
         console.log(
-          "An error ocurred when saving 'itemsList to the local storage':\n",
+          "An error ocurred when retrieving 'itemsList' from the local storage:\n",
           error
         );
-        localStorage.removeItem("itemsList");
+        localStorage.removeItem("itemsList"); // Assume the item is corrupted and delete it
       }
     }
     if (localStorage.nextKey) {
-      // console.log(this.nextKey, "->", localStorage.nextKey);
       this.nextKey = Number(localStorage.nextKey);
     }
     if (localStorage.lang) {
@@ -61,8 +75,13 @@ export default {
   },
   methods: {
     changeLanguageTo: function(selectedLang) {
-      this.lang = selectedLang;
-      this.saveLang();
+      const validLangs = ["EN", "ES"];
+
+      // Make sure that the selected language is valid
+      if (validLangs.indexOf(selectedLang) !== -1) {
+        this.lang = selectedLang;
+        this.saveLang();
+      }
     },
     addNewItem: function(itemText) {
       if (itemText) {
@@ -78,7 +97,6 @@ export default {
       this.listItems = this.listItems.filter(obj => {
         return obj.id !== itemId;
       });
-      // Could reduce the nextKey value by 1 here but it's not necessary
       this.saveListData();
     },
     // Local storage
@@ -87,9 +105,20 @@ export default {
     },
     saveListData: function() {
       const parsed = JSON.stringify(this.listItems);
-      localStorage.setItem("itemsList", parsed);
-      // console.log(localStorage.nextKey, "->", this.nextKey);
-      localStorage.nextKey = this.nextKey;
+      try {
+        localStorage.setItem("itemsList", parsed); // Save list items to the local storage
+        localStorage.nextKey = this.nextKey; // Save the next key to not have duplicates
+      } catch (err) {
+        console.log(
+          "An error ocurred saving 'itemsList' to the local storage:",
+          err
+        );
+        localStorage.removeItem("itemsList"); // Assume the item is corrupted and delete it
+      }
+    },
+    changeListOrder: function() {
+      // Change sorting directionof the list
+      this.reverseList = !this.reverseList;
     }
   },
   computed: {
@@ -101,6 +130,12 @@ export default {
               label: "Nuevo elemento:",
               placeholder: "Hacer la cena...",
               button: "Añadir"
+            },
+            SelectLang: {
+              ariaLabel: "Seleccione un lenguaje"
+            },
+            ListItem: {
+              ariaLabel: "Eliminar"
             }
           };
 
@@ -110,6 +145,12 @@ export default {
               label: "New list item:",
               placeholder: "Make dinner...",
               button: "Add"
+            },
+            SelectLang: {
+              ariaLabel: "Select a language"
+            },
+            ListItem: {
+              ariaLabel: "Delete"
             }
           };
       }
@@ -123,7 +164,7 @@ export default {
 
 $primary-color: hsl(100deg, 50%, 50%);
 $background-color: hsl(100deg, 50%, 0%);
-$hover-color: hsl(100deg, 100%, 50%, 0.1);
+$active-color: hsl(100deg, 100%, 50%, 0.2);
 $text-color: hsl(100deg, 0%, 85%);
 
 * {
@@ -170,17 +211,30 @@ button {
   font-family: inherit;
   font-weight: bold;
 
-  &:hover {
-    background-color: $hover-color;
+  &:hover,
+  &:focus {
+    background: $primary-color;
+    color: black;
   }
   &:active {
     border-color: white;
-    background-color: $primary-color;
+    background-color: $active-color;
     color: white;
   }
 }
 ul {
   width: 20rem;
   max-width: 90%;
+}
+.buttonList {
+  display: flex;
+  flex-direction: row;
+}
+.itemList {
+  display: flex;
+  flex-direction: column;
+}
+.reverse {
+  flex-direction: column-reverse;
 }
 </style>

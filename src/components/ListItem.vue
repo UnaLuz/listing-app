@@ -1,14 +1,25 @@
 <template>
   <li id="list-item">
     <slot></slot>
-    <button @click="$emit('delete-item', itemId)">X</button>
+    <button @click="$emit('delete-item', itemId)" :aria-label="ariaLabel">
+      <ph-x :size="20" weight="bold" />
+    </button>
   </li>
 </template>
 
 <script>
+import { PhX } from "phosphor-vue";
 export default {
-  name: "ListItem",
-  props: ["itemId"]
+  components: {
+    PhX
+  },
+  props: {
+    itemId: {
+      type: Number,
+      required: true
+    },
+    ariaLabel: String
+  }
 };
 </script>
 
@@ -29,6 +40,7 @@ $item-border: hsla(100deg, 50%, 50%, 0.35);
     margin-left: 0.5rem;
     flex-grow: 0;
     flex-shrink: 0;
+    padding: 0.2em 0.5em 0 0.5em;
   }
 }
 </style>

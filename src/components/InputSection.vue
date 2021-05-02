@@ -1,47 +1,51 @@
 <template>
   <div id="input-section">
-    <label for="newItem">{{ label }}</label>
+    <label for="newItem">{{ labelTxt }}</label>
     <div>
       <input
         v-model="newListItem"
         type="text"
         id="newItem"
         name="newItem"
-        :placeholder="placeholder"
+        :placeholder="placeholderTxt"
         minlength="2"
+        @keyup.enter="addItem()"
       />
-      <button @click="addItem()">{{ addButtonTxt }}</button>
+      <button @click="addItem()">{{ buttonTxt }}</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "InputSection",
   data() {
     return {
       newListItem: ""
     };
   },
-  props: ["labelTxt", "placeholderTxt", "buttonTxt"],
+  props: {
+    labelTxt: {
+      type: String,
+      required: false,
+      default: "New list item:"
+    },
+    placeholderTxt: {
+      type: String,
+      required: false,
+      default: "Make dinner..."
+    },
+    buttonTxt: {
+      type: String,
+      required: false,
+      default: "Add"
+    }
+  },
   methods: {
     addItem: function() {
       if (this.newListItem) {
         this.$emit("add-new-item", this.newListItem);
         this.newListItem = "";
       }
-    }
-  },
-  computed: {
-    // In case there was a problem with the props passed:
-    label: function() {
-      return this.labelTxt || "New list item:";
-    },
-    placeholder: function() {
-      return this.placeholderTxt || "Make dinner...";
-    },
-    addButtonTxt: function() {
-      return this.buttonTxt || "Add";
     }
   }
 };
@@ -57,6 +61,7 @@ $primary-color: hsl(100deg, 50%, 50%);
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
+  margin-bottom: 0.5em;
 }
 input {
   height: 2rem;
@@ -75,10 +80,5 @@ input {
 input,
 button {
   margin-left: 1em;
-}
-label,
-input,
-button {
-  margin-bottom: 0.5rem;
 }
 </style>
