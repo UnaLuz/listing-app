@@ -20,7 +20,6 @@
 export default {
   data() {
     return {
-      default: "EN",
       langs: [
         { key: "EN", value: "English" },
         { key: "ES", value: "Español" }
@@ -36,8 +35,11 @@ export default {
     ariaLabel: String
   },
   computed: {
+    // I need 'selected' to be a computed property so that when 'lang' is properly set in the parent
+    // it changes it's default value updating 'selected' too, otherwise the value of the select element
+    // stays equal to 'lang's default value until user changes option
     selected: function() {
-      return this.lang || this.default;
+      return this.lang;
     }
   }
 };

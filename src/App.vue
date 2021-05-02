@@ -66,9 +66,13 @@ export default {
   },
   methods: {
     changeLanguageTo: function(selectedLang) {
-      console.log("changeLanguageTo:", selectedLang);
-      this.lang = selectedLang;
-      this.saveLang();
+      const validLangs = ["EN", "ES"];
+
+      // Make sure that the selected language is valid
+      if (validLangs.indexOf(selectedLang) !== -1) {
+        this.lang = selectedLang;
+        this.saveLang();
+      }
     },
     addNewItem: function(itemText) {
       if (itemText) {
